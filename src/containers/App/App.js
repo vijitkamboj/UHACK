@@ -4,7 +4,6 @@ import './App.css';
 // import ColorPanel from "../ColorPanel/ColorPanel"
 import SidePanel from "../SidePanel/SidePanel"
 import MessagePanel from "../MessagePanel/MessagePanel"
-import MetaPanel from "../MetaPanel/MetaPanel"
 
 import {connect} from "react-redux"
 
@@ -26,7 +25,6 @@ class App extends Component {
                     {/* <ColorPanel /> */}
                     <SidePanel currentUser={this.props.currentUser}/>
                     <MessagePanel currentUser={this.props.currentUser} currentChannel={this.props.currentChannel} />  
-                    <MetaPanel />
                 </div>
             )
        
