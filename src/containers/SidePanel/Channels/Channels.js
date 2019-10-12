@@ -8,12 +8,15 @@ import { changeCurrentChannel } from "../../../actions/channels";
 class Channels extends Component{
 
     state = {
-        channels: [],
+        orders: [],
         modal: false,
         channelName: "",
         channelDetail: "",
+        dateOfPickup : "",
+        timeOfPickup : "",
+        weightOfOrder : "",
         isFormEmpty: true,
-        channelsRef: firebase.database().ref("channels"),
+        channelsRef: firebase.database().ref("supply"),
         firstLoad: true,
         activeChannel: ""
     } // defining local state for channel compoenent
@@ -93,14 +96,17 @@ class Channels extends Component{
         }
     } // method to handle submit event
 
-    addChannel = ({channelDetail,channelName,channelsRef}) => {
+    addChannel = ({channelDetail,channelName,channelsRef,dateOfPickup,timeOfPickup , weightOfOrder}) => {
 
         const { displayName , photoURL} = this.props.currentUser
         const key = channelsRef.push().key
         const newChannel = {
             id: key,
-            name: channelName,
-            detail: channelDetail,
+            orderName: channelName,
+            orderDetail: channelDetail,
+            dateOfPickup : dateOfPickup,
+            timeOfPickup : timeOfPickup,
+            weightOfOrder : weightOfOrder,
             createdBy: {
                 name: displayName,
                 avatar: photoURL
@@ -128,7 +134,7 @@ class Channels extends Component{
             [event.target.name]: event.target.value,
         })
 
-        if (this.state.channelDetail === "" || this.state.channelName === ""){
+        if (this.state.channelDetail === "" || this.state.channelName === "" || this.state.dateOfPickup === "" || this.state.timeOfPickup === "" || this.state.weightOfOrder === ""){
             this.setState({
                 isFormEmpty : true
             })
@@ -161,7 +167,7 @@ class Channels extends Component{
     } // method to check if enter is pressed
 
     render(){
-        const {channels ,modal , isFormEmpty} = this.state;
+        const {orders: channels ,modal , isFormEmpty} = this.state;
         const{showModal , closeModal} =this;
         
         return(
@@ -203,14 +209,14 @@ class Channels extends Component{
                             border:"none",
                         }}
                     >
-                        Add a channel
+                        Sell fabric
                     </Modal.Header>
 
                     <Modal.Content style={{border:"none",fontWeight:"lighter"}}>
 
                         <Input 
                             fluid 
-                            label="Name of the Channel"
+                            label="Order Name"
                             name="channelName"
                             onChange={this.handleChange}
                             style={{marginBottom:"10px"}}
@@ -218,10 +224,36 @@ class Channels extends Component{
 
                         <Input 
                             fluid 
-                            type="text"
-                            label="About the Channel"
                             name="channelDetail"
+                            label = "Order Detail"
                             onChange={this.handleChange}
+                            style={{marginBottom:"10px"}}
+                        />
+                        
+                        <Input 
+                            fluid 
+                            type = "date"
+                            name="dateOfPickup"
+                            label = "Pickup date"
+                            onChange={this.handleChange}
+                            style={{marginBottom:"10px"}}
+                        />
+
+                        <Input 
+                            fluid 
+                            type="time"
+                            label="Pickup Time"
+                            name="timeOfPickup"
+                            onChange={this.handleChange}
+                            style={{marginBottom:"10px"}}
+                        />
+
+                        <Input 
+                            fluid 
+                            name="weightOfOrder"
+                            label = "Order Weight"
+                            onChange={this.handleChange}
+                            style={{marginBottom:"10px"}}
                         />
 
                     </Modal.Content>
