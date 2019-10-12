@@ -1,7 +1,7 @@
 import React,{Component} from 'react';
 import './App.css';
 
-import ColorPanel from "../ColorPanel/ColorPanel"
+// import ColorPanel from "../ColorPanel/ColorPanel"
 import SidePanel from "../SidePanel/SidePanel"
 import MessagePanel from "../MessagePanel/MessagePanel"
 import MetaPanel from "../MetaPanel/MetaPanel"

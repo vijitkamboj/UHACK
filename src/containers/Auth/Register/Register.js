@@ -16,6 +16,8 @@ class register extends Component {
 			username:'',
 			email: '',
 			password:'',
+			phnumber: "",
+			address : '',
 			passwordConfirmation:'',
 			errors: [],
 			loading:false,
@@ -82,7 +84,9 @@ class register extends Component {
 			return (
 				this.state.userRef.child(createdUser.user.uid).set({
 					name: createdUser.user.displayName,
-					avatar: createdUser.user.photoURL
+					avatar: createdUser.user.photoURL,
+					address: this.state.address,
+					phnumber: this.state.phnumber
 				})
 			)
 	}// saving extra info about users in realtime database
@@ -112,9 +116,9 @@ class register extends Component {
 		}
 	} // method to check if form is valid
 
-	isFormEmpty = ({username,email,password,passwordConfirmation}) =>{
+	isFormEmpty = ({username,email,password,passwordConfirmation , phnumber, address}) =>{
 		return(
-		!username.length || !email.length || !password.length || !passwordConfirmation.length
+		!username.length || !email.length || !password.length || !passwordConfirmation.length || !address.length||!phnumber.length
 	)} // method to check if form is empty
 
 	isPasswordValid = ({password , passwordConfirmation}) => {
@@ -145,6 +149,8 @@ class register extends Component {
 			passwordConfirmation,
 			loading,
 			errors,
+			phnumber,
+			address,
 			status
 		} = this.state;
 		const {
@@ -174,6 +180,34 @@ class register extends Component {
 						type="text" 
 						onChange={handleChange}
 						value = {username}
+						/>
+					</div>
+
+					<div className="field">
+						<div className="name">
+							Address
+						</div>
+
+						<input 
+						className="form" 
+						name="address" 
+						type="text" 
+						onChange={handleChange}
+						value = {address}
+						/>
+					</div>
+
+					<div className="field">
+						<div className="name">
+							Phone Number
+						</div>
+
+						<input 
+						className="form" 
+						name="phnumber" 
+						type="text" 
+						onChange={handleChange}
+						value = {phnumber}
 						/>
 					</div>
 
