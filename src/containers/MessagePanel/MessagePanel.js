@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 
 import MessagesHeader from "./MessagesHeader";
 // import MessagesForm from "./MessagesForm";
-import {Segment,Comment} from "semantic-ui-react";
+import {Segment,Comment,Card,Icon,Image,Button} from "semantic-ui-react";
 import firebase from "../../firebase";
 import moment from "moment"
 
@@ -94,7 +94,36 @@ class MessagePanel extends Component{
                     {messages.map (message => 
                         {
                             return(
-                                <div key = {message.id}></div>
+                                <div key = {message.id}>
+                                    <Card style={{margin:"8px", marginRight: "20px"}}>
+                                        <Image src='https://react.semantic-ui.com/images/avatar/large/matthew.png' wrapped ui={false} />
+                                        <Card.Content>
+                                            <Card.Header>{message.orderName}</Card.Header>
+
+                                            <Card.Meta>
+                                                <span className='date'>{message.rate}</span>Rs/Kg
+                                            </Card.Meta>
+
+                                            <Card.Description>
+                                                {message.orderDetail}
+                                            </Card.Description>
+
+                                            </Card.Content>
+
+                                            <Card.Content extra>
+                                            <span>
+                                                <Icon name='shopping bag' />
+                                                {message.weightOfOrder} Kg available
+                                            </span>
+                                            <Button style={{marginLeft:"60px"}} animated='vertical' >
+                                                <Button.Content hidden>Shop</Button.Content>
+                                                <Button.Content visible>
+                                                    <Icon name='shop' />
+                                                </Button.Content>
+                                            </Button>
+                                        </Card.Content>
+                                    </Card>
+                                </div>
                             )
                         }
                     )}
@@ -126,11 +155,11 @@ class MessagePanel extends Component{
                 />
 
                 <Segment 
-                    id = "message-panel-segment"
+                    
                     loading={messagesLoading}
                     style={{flex:"1", width:"95%" , margin:"10px auto 0px auto" , overflowY:"scroll"}}
                 >
-                    <Comment.Group>
+                    <Comment.Group id = "message-panel-segment" style={{marginRight:"0px" , maxWidth:"100%"}}>
                         {this.displayStock(messages,currentUser)}
                     </Comment.Group>
                 </Segment>

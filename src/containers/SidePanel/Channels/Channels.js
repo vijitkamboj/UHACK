@@ -197,7 +197,7 @@ d
                     paddingLeft:"55px",
                     marginTop:"0px"
                 }}>
-                    {this.displayChannels(channels)}
+                   {this.displayChannels(channels)}
                 </ul>
                 
                 {/* dispalying modal */}
