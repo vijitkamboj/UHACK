@@ -78,7 +78,7 @@ class Channels extends Component{
                                     color:"white"
 
                                 }}
-                            >s
+                            >
                                 {channel.orderName}
                             </span>
                         </li>
