@@ -50,7 +50,7 @@ class UserPanel extends Component {
                 {/* displaying tale heading */}
                 <div id="user-panel-header">
                     <img src={logo} alt="logo" style={{height: "40px" , width:"auto" , margin:"10px"}}/>
-                    Tale
+                    Kapda Bazaar
                 </div>
 
                 {/* Dropdown */}

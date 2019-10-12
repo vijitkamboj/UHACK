@@ -3,14 +3,14 @@ import React, { Component } from 'react';
 
 import MessagesHeader from "./MessagesHeader";
 // import MessagesForm from "./MessagesForm";
-import {Segment,Comment, Image} from "semantic-ui-react";
+import {Segment,Comment} from "semantic-ui-react";
 import firebase from "../../firebase";
 import moment from "moment"
 
 class MessagePanel extends Component{
 
     state = {
-        messagesRef: firebase.database().ref("messages"),
+        messagesRef: firebase.database().ref("supply"),
         messages: [],
         messagesLoading:true,
     } // initial state - message segment will be loading 
@@ -68,9 +68,9 @@ class MessagePanel extends Component{
     }// method to add listeners
 
 
-    addMessageListener = (channelId) => {
+    addMessageListener = () => {
         let loadedMessages = []
-        this.state.messagesRef.child(channelId).on("child_added", snap => {
+        this.state.messagesRef.on("child_added", snap => {
             loadedMessages.push(snap.val())
             this.setState({
                 messages: loadedMessages,
@@ -82,18 +82,19 @@ class MessagePanel extends Component{
 
 
     isImage = (message) => {
-        return message.hasOwnProperty('image') && !message.hasOwnProperty('content')
+        return message.hasOwnProperty('image') && ! message.hasOwnProperty('content')
     } // method to check wheather message is a image or not
 
 
     displayStock = (messages,currentUser) => {
         if(messages.length>0){
+            console.log(messages);
             return(
                 <React.Fragment>
                     {messages.map (message => 
                         {
                             return(
-                                <div></div>
+                                <div key = {message.id}></div>
                             )
                         }
                     )}

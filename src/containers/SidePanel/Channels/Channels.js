@@ -8,13 +8,14 @@ import { changeCurrentChannel } from "../../../actions/channels";
 class Channels extends Component{
 
     state = {
-        orders: [],
+        channels: [],
         modal: false,
         channelName: "",
         channelDetail: "",
         dateOfPickup : "",
         timeOfPickup : "",
         weightOfOrder : "",
+        rate : "",
         isFormEmpty: true,
         channelsRef: firebase.database().ref("supply"),
         firstLoad: true,
@@ -69,7 +70,7 @@ class Channels extends Component{
                             onClick={()=>this.handleChannelClick(channel)}
                         >
                             <span
-                                name = {channel.name}
+                                name = {channel.orderName}
                                 style={{
                                     fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
                                     fontWeight:"lighter",
@@ -77,8 +78,8 @@ class Channels extends Component{
                                     color:"white"
 
                                 }}
-                            >
-                                {channel.name}
+                            >s
+                                {channel.orderName}
                             </span>
                         </li>
                     )
@@ -95,8 +96,8 @@ class Channels extends Component{
             this.addChannel(this.state)
         }
     } // method to handle submit event
-
-    addChannel = ({channelDetail,channelName,channelsRef,dateOfPickup,timeOfPickup , weightOfOrder}) => {
+d
+    addChannel = ({channelDetail,channelName,channelsRef,dateOfPickup,timeOfPickup , weightOfOrder,rate}) => {
 
         const { displayName , photoURL} = this.props.currentUser
         const key = channelsRef.push().key
@@ -107,6 +108,7 @@ class Channels extends Component{
             dateOfPickup : dateOfPickup,
             timeOfPickup : timeOfPickup,
             weightOfOrder : weightOfOrder,
+            rate : rate,
             createdBy: {
                 name: displayName,
                 avatar: photoURL
@@ -134,7 +136,7 @@ class Channels extends Component{
             [event.target.name]: event.target.value,
         })
 
-        if (this.state.channelDetail === "" || this.state.channelName === "" || this.state.dateOfPickup === "" || this.state.timeOfPickup === "" || this.state.weightOfOrder === ""){
+        if (this.state.channelDetail === "" || this.state.channelName === "" || this.state.dateOfPickup === "" || this.state.timeOfPickup === "" || this.state.weightOfOrder === "" || this.state.rate === ""){
             this.setState({
                 isFormEmpty : true
             })
@@ -167,7 +169,7 @@ class Channels extends Component{
     } // method to check if enter is pressed
 
     render(){
-        const {orders: channels ,modal , isFormEmpty} = this.state;
+        const {channels ,modal , isFormEmpty} = this.state;
         const{showModal , closeModal} =this;
         
         return(
@@ -176,7 +178,7 @@ class Channels extends Component{
                 <div id="user-panel-channels-header" >
                 <Icon name="circle" size="small" style={{margin:"auto 10px auto 0",color:"rgba(255,153,153)"}} />
 
-                    Channels ({channels.length})
+                    Orders ({channels.length})
 
                     <Icon 
                     name="add" 
@@ -216,7 +218,7 @@ class Channels extends Component{
 
                         <Input 
                             fluid 
-                            label="Order Name"
+                            label="Type of Material"
                             name="channelName"
                             onChange={this.handleChange}
                             style={{marginBottom:"10px"}}
@@ -225,7 +227,7 @@ class Channels extends Component{
                         <Input 
                             fluid 
                             name="channelDetail"
-                            label = "Order Detail"
+                            label = "Material Detail"
                             onChange={this.handleChange}
                             style={{marginBottom:"10px"}}
                         />
@@ -252,6 +254,14 @@ class Channels extends Component{
                             fluid 
                             name="weightOfOrder"
                             label = "Order Weight"
+                            onChange={this.handleChange}
+                            style={{marginBottom:"10px"}}
+                        />
+                         <Input 
+                            fluid 
+                            type = "text"
+                            name="rate"
+                            label = "Rate"
                             onChange={this.handleChange}
                             style={{marginBottom:"10px"}}
                         />
