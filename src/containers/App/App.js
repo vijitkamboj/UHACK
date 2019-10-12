@@ -23,7 +23,7 @@ class App extends Component {
         document.body.className = "app-body"
             return(
                 <div id="app">
-                    <ColorPanel />
+                    {/* <ColorPanel /> */}
                     <SidePanel currentUser={this.props.currentUser}/>
                     <MessagePanel currentUser={this.props.currentUser} currentChannel={this.props.currentChannel} />  
                     <MetaPanel />

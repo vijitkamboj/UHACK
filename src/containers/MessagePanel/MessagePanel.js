@@ -2,7 +2,7 @@ import "./MessagePanel.css"
 import React, { Component } from 'react';
 
 import MessagesHeader from "./MessagesHeader";
-import MessagesForm from "./MessagesForm";
+// import MessagesForm from "./MessagesForm";
 import {Segment,Comment, Image} from "semantic-ui-react";
 import firebase from "../../firebase";
 import moment from "moment"
@@ -86,22 +86,14 @@ class MessagePanel extends Component{
     } // method to check wheather message is a image or not
 
 
-    displayMessages = (messages,currentUser) => {
+    displayStock = (messages,currentUser) => {
         if(messages.length>0){
             return(
                 <React.Fragment>
                     {messages.map (message => 
                         {
                             return(
-                                <Comment key={message.timestamp} >
-                                    <Comment.Avatar src={message.user.avatar}  />
-                                    <Comment.Content  className={currentUser.uid === message.user.id ? "message_self" : ""}>
-                                        <Comment.Author as="a">{message.user.name}</Comment.Author>
-                                        <Comment.Metadata>{this.timeFromNow(message.timestamp)}</Comment.Metadata>
-                                        {this.isImage(message) ? <Image src={message.image} className="message-image"/> : <Comment.Text>{message.content}</Comment.Text>}
-                                    </Comment.Content>
-
-                                </Comment>
+                                <div></div>
                             )
                         }
                     )}
@@ -138,17 +130,11 @@ class MessagePanel extends Component{
                     style={{flex:"1", width:"95%" , margin:"10px auto 0px auto" , overflowY:"scroll"}}
                 >
                     <Comment.Group>
-                        {this.displayMessages(messages,currentUser)}
+                        {this.displayStock(messages,currentUser)}
                     </Comment.Group>
                 </Segment>
 
-                <MessagesForm 
-                    firebase = {firebase} 
-                    messagesRef={messagesRef} 
-                    currentUser={currentUser} 
-                    currentChannel = {currentChannel}
-
-                />
+             
             </div>
         )
     }
