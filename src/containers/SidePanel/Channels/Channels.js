@@ -34,7 +34,7 @@ class Channels extends Component{
     addListeners = () => {
         let loadedChannels = [];
         this.state.channelsRef.on("child_added", snap => {
-            loadedChannels.push(snap.val());
+            snap.val().createdBy.name === this.props.currentUser.displayName && loadedChannels.push(snap.val());
             loadedChannels.length === 1 && this.props.changeCurrentChannel(loadedChannels[0]);
             this.setFirstChannel(loadedChannels);
             this.setState({channels:loadedChannels});
@@ -58,10 +58,12 @@ class Channels extends Component{
 
     }
 
+    
+
     displayChannels = (channels) => {
         return(
             <React.Fragment>
-                {channels.length>0 && channels.map((channel)=> {
+                {channels.length>0 && channels.filter((channel) => channel.createdBy.name === this.props.currentUser.displayName).map((channel)=> {
                     return(    
                         <li 
                             key={channel.id}

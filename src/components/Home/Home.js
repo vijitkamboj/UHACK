@@ -13,7 +13,7 @@ class Home extends Component {
 				<Nav />
 				<div id="home-cover"></div> 
 				<div id="home-intro">
-						<h3>HI</h3>
+						
 				</div>
 
 			</div>

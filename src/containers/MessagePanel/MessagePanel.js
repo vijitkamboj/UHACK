@@ -97,7 +97,6 @@ class MessagePanel extends Component{
 
     displayStock = (messages,currentUser) => {
         if(messages.length>0){
-            console.log(messages);
             return(
                 <React.Fragment>
                     {messages.map (message => 
