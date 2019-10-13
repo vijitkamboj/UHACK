@@ -4,39 +4,28 @@ import mime from "mime-types"
 
 class FileModal extends Component {
     state = {
-        file: null,
+        amount: null,
         isFormEmpty: true,
-        authorized: ["image/jpeg", "image/png"]
     }
 
-    isAuthorized = (filename) => this.state.authorized.includes(mime.lookup(filename))
 
-    addFile = event => {
-        if (event.target.files[0]) {
-            this.setState({
-                isFormEmpty: false
-            })
-        } else {
-            this.setState({
-                isFormEmpty: true
-            })
-        }
-
+    palceOrder = () => {
+        const {file} = this.state
+        this.props.closeModal()
         this.setState({
-            file: event.target.files[0],
+            amount: ""
         })
     }
 
-    sendFile = () => {
-        const {file} = this.state
-        if(this.isAuthorized(file.name)){
-            const metaData = {
-                contentType : mime.lookup(file.name)
-            }
-            this.props.uploadFile(file,metaData);
-            this.props.closeModal()
+    isFormEmpty = (event) => {
+        if (event.target.value === "") {
             this.setState({
-                file: null
+                isFormEmpty : true
+            })
+        
+        }else{
+            this.setState({
+                isFormEmpty:false
             })
         }
     }
@@ -53,18 +42,23 @@ class FileModal extends Component {
                             border:"none",
                         }}
                     >
-                        Select an Image File
+                        Place order
                     </Modal.Header>
 
                     <Modal.Content style={{border:"none",fontWeight:"lighter"}}>
 
-                        <Input 
-                            fluid 
-                            label="jpeg, png"
-                            name="file"
-                            type="file"
-                            onChange={this.addFile}
-                            style={{marginBottom:"10px"}}
+                        <Input
+                            fluid
+                            action={{
+                            color: 'teal',
+                            labelPosition: 'left',
+                            icon: 'cart',
+                            content: 'Checkout',
+                            }}
+
+                            actionPosition='left'
+                            placeholder='Amount  in Kg...'
+                            onChange = {this.isFormEmpty}
                         />
 
                     </Modal.Content>
@@ -75,11 +69,11 @@ class FileModal extends Component {
                             color="green" 
                             basic 
                             inverted 
-                            onClick={this.sendFile} 
+                            onClick={this.palceOrder} 
                             disabled={this.state.isFormEmpty}
                         >
-                            <Icon name="checkmark"/>
-                            Send
+                            <Icon name="shopping basket"/>
+                            Buy
                         </Button>
 
                         <Button 

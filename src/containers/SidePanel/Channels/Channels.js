@@ -178,7 +178,7 @@ d
                 <div id="user-panel-channels-header" >
                 <Icon name="circle" size="small" style={{margin:"auto 10px auto 0",color:"rgba(255,153,153)"}} />
 
-                    Orders ({channels.length})
+                    Stock ({channels.length})
 
                     <Icon 
                     name="add" 

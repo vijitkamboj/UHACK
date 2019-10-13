@@ -2,6 +2,7 @@ import "./MessagePanel.css"
 import React, { Component } from 'react';
 
 import MessagesHeader from "./MessagesHeader";
+import FileModal from "./FileModal";
 // import MessagesForm from "./MessagesForm";
 import {Segment,Comment,Card,Icon,Image,Button} from "semantic-ui-react";
 import firebase from "../../firebase";
@@ -13,6 +14,7 @@ class MessagePanel extends Component{
         messagesRef: firebase.database().ref("supply"),
         messages: [],
         messagesLoading:true,
+        modal : false
     } // initial state - message segment will be loading 
 
     componentDidMount() {
@@ -85,6 +87,13 @@ class MessagePanel extends Component{
         return message.hasOwnProperty('image') && ! message.hasOwnProperty('content')
     } // method to check wheather message is a image or not
 
+    handleShop = () => {
+        this.setState({modal : true})
+    }
+
+    closeModal = () => {
+        this.setState({modal:false})
+    }
 
     displayStock = (messages,currentUser) => {
         if(messages.length>0){
@@ -115,7 +124,7 @@ class MessagePanel extends Component{
                                                 <Icon name='shopping bag' />
                                                 {message.weightOfOrder} Kg available
                                             </span>
-                                            <Button style={{marginLeft:"60px"}} animated='vertical' >
+                                            <Button style={{marginLeft:"60px"}} animated='vertical' onClick={this.handleShop} >
                                                 <Button.Content hidden>Shop</Button.Content>
                                                 <Button.Content visible>
                                                     <Icon name='shop' />
@@ -150,6 +159,7 @@ class MessagePanel extends Component{
         const{currentChannel,currentUser} = this.props
         return(
             <div id="message-panel" className="panels" >
+                <FileModal modal = {this.state.modal} closeModal={this.closeModal}/>
                 <MessagesHeader 
                     currentChannel = {this.props.currentChannel }
                 />
