@@ -8,8 +8,8 @@ class MessagesHeader extends Component{
         return(
             <Segment clearing style={{width:"95%",margin:"10px auto 0 auto", height:"auto"}} >
 
-                <span style={{fontSize:"20px",marginRight:"8px"}}>
-                    {this.props.currentChannel && this.props.currentChannel.name}
+                <span style={{fontSize:"25px",marginRight:"8px", fontWeight:"bolder"}}>
+                    Available Fabrics in Bazaar ... 
                 </span>
 
                 <Input 

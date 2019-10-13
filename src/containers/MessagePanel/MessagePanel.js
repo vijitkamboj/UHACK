@@ -161,7 +161,6 @@ class MessagePanel extends Component{
             <div id="message-panel" className="panels" >
                 <FileModal modal = {this.state.modal} closeModal={this.closeModal}/>
                 <MessagesHeader 
-                    currentChannel = {this.props.currentChannel }
                 />
 
                 <Segment 
