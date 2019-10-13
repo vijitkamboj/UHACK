@@ -7,7 +7,7 @@
     background-position: center;
     background-size: cover;
 }
-#home-intro{
+#home-caption{
     width: 100%;
     height: 500px;
     font-size: 90px;
@@ -20,8 +20,29 @@
 }
 
 #title{
+    height: 400px;
     color: rgb(255, 61, 78);
     margin-top: -50%;
     position: relative;
     top: 50%
 }
+
+/* #title2{
+    height: 500px;
+    color: rgb(255, 61, 78);
+    margin-top: -50%;
+    position: relative;
+    top: 50%
+}
+
+#home-intro{
+    width: 100%;
+    height: 700px;
+    font-size: 35px;
+    text-align: center;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    font-weight: bolder;
+    background-image: url("./home-intro-back.jpg");
+    background-position: center;
+    background-size: cover;
+} */
