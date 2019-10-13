@@ -1,17 +1,19 @@
 import React, { Component } from 'react';
-import {Modal,Button,Icon,Input} from "semantic-ui-react"
-import mime from "mime-types"
+import {Modal,Button,Icon,Input,Confirm} from "semantic-ui-react"
+
 
 class FileModal extends Component {
     state = {
         amount: null,
         isFormEmpty: true,
+        open:false
     }
 
 
     palceOrder = () => {
         const {file} = this.state
         this.props.closeModal()
+        this.show()
         this.setState({
             amount: ""
         })
@@ -30,64 +32,76 @@ class FileModal extends Component {
         }
     }
 
+    show = () => this.setState({ open: true })
+    handleConfirm = () => this.setState({ open: false })
+    handleCancel = () => this.setState({ open: false })
+
     render(){
         return(
-            <Modal basic open={this.props.modal} closeIcon onClose={this.props.closeModal} onKeyDown={this.handleEnter}>
+            <React.Fragment>
+                <Modal basic open={this.props.modal} closeIcon onClose={this.props.closeModal} onKeyDown={this.handleEnter}>
 
-                    <Modal.Header 
-                        icon="add" 
-                        style={{
-                            fontWeight:"lighter",
-                            color: "rgb(226, 226, 226)",
-                            border:"none",
+                <Modal.Header 
+                    icon="add" 
+                    style={{
+                        fontWeight:"lighter",
+                        color: "rgb(226, 226, 226)",
+                        border:"none",
+                    }}
+                >
+                    Place order
+                </Modal.Header>
+
+                <Modal.Content style={{border:"none",fontWeight:"lighter"}}>
+
+                    <Input
+                        fluid
+                        action={{
+                        color: 'teal',
+                        labelPosition: 'left',
+                        icon: 'cart',
+                        content: 'Checkout',
                         }}
+
+                        actionPosition='left'
+                        placeholder='Amount  in Kg...'
+                        onChange = {this.isFormEmpty}
+                    />
+
+                </Modal.Content>
+
+                <Modal.Actions style={{border:"none"}}>
+
+                    <Button 
+                        color="green" 
+                        basic 
+                        inverted 
+                        onClick={this.palceOrder} 
+                        disabled={this.state.isFormEmpty}
                     >
-                        Place order
-                    </Modal.Header>
+                        <Icon name="shopping basket"/>
+                        Buy
+                    </Button>
 
-                    <Modal.Content style={{border:"none",fontWeight:"lighter"}}>
+                    <Button 
+                        color="red" 
+                        basic 
+                        inverted 
+                        onClick={this.props.closeModal}
+                    >
+                        <Icon name="remove" />
+                        Cancel
+                    </Button>
 
-                        <Input
-                            fluid
-                            action={{
-                            color: 'teal',
-                            labelPosition: 'left',
-                            icon: 'cart',
-                            content: 'Checkout',
-                            }}
-
-                            actionPosition='left'
-                            placeholder='Amount  in Kg...'
-                            onChange = {this.isFormEmpty}
-                        />
-
-                    </Modal.Content>
-
-                    <Modal.Actions style={{border:"none"}}>
-                    
-                        <Button 
-                            color="green" 
-                            basic 
-                            inverted 
-                            onClick={this.palceOrder} 
-                            disabled={this.state.isFormEmpty}
-                        >
-                            <Icon name="shopping basket"/>
-                            Buy
-                        </Button>
-
-                        <Button 
-                            color="red" 
-                            basic 
-                            inverted 
-                            onClick={this.props.closeModal}
-                        >
-                            <Icon name="remove" />
-                            Cancel
-                        </Button>
-
-                    </Modal.Actions>
+                </Modal.Actions>
                 </Modal>
+                <Confirm
+                    open={this.state.open}
+                    content='Your order is placed'
+                    onCancel={this.handleCancel}
+                    onConfirm={this.handleConfirm}
+                />
+            </React.Fragment>
         )
     }
 }
