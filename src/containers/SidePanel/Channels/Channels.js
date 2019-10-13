@@ -265,6 +265,14 @@ d
                             onChange={this.handleChange}
                             style={{marginBottom:"10px"}}
                         />
+                        <Input 
+                            fluid 
+                            label="jpeg, png"
+                            name="file"
+                            type="file"
+                            onChange={this.addFile}
+                            style={{marginBottom:"10px"}}
+                        />
 
                     </Modal.Content>
 

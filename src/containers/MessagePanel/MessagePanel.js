@@ -105,7 +105,7 @@ class MessagePanel extends Component{
                             return(
                                 <div key = {message.id}>
                                     <Card style={{margin:"8px", marginRight: "20px"}}>
-                                        <Image src='https://react.semantic-ui.com/images/avatar/large/matthew.png' wrapped ui={false} />
+                                        <Image src='https://5.imimg.com/data5/DW/WO/MY-9563002/plain-cotton-fabric-500x500.png' wrapped ui={false} />
                                         <Card.Content>
                                             <Card.Header>{message.orderName}</Card.Header>
 
