@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 
 import MessagesHeader from "./MessagesHeader";
 import FileModal from "./FileModal";
-// import MessagesForm from "./MessagesForm";
+
 import {Segment,Comment,Card,Icon,Image,Button} from "semantic-ui-react";
 import firebase from "../../firebase";
 import moment from "moment"
@@ -20,7 +20,7 @@ class MessagePanel extends Component{
     componentDidMount() {
         this.scrollBottom()
         setTimeout(() => {
-            const {currentChannel,currentUser} = this.props;
+            const {currentUser} = this.props;
 
             if (currentUser) {
                 this.addListeners()
@@ -29,36 +29,6 @@ class MessagePanel extends Component{
 
     } // when component has mounted , adding listeners on channel but after a
      //delay of 1.9s so as to wait for (channel component to succefully mount so that firstChannel can be stored on global state)  
-
-
-    componentWillUpdate(nextProps){
-        if(nextProps.currentChannel !== this.props.currentChannel){
-            this.setState({messages:""})
-            this.state.messagesRef.off("child_added")
-        }
-    } // before component updates if previous channel is not equal to upcoming cahannel then remove previous listeners and clear messages
-
-
-    componentDidUpdate(prevProps) {
-        this.scrollBottom()
-        const {
-            currentChannel,
-            currentUser
-        } = this.props;
-
-        if (prevProps.currentChannel !== currentChannel) {
-
-            if ( currentUser) {
-                this.addListeners()
-            }
-
-            this.setState({
-                messagesLoading: false
-            })
-        } // if prev channel is different from new channel then adding listener on new channel
-
-    } // executes just after the compopnent has finished update
-
 
     componentWillUnmount(){
         this.state.messagesRef.off("child_added")
@@ -95,7 +65,7 @@ class MessagePanel extends Component{
         this.setState({modal:false})
     }
 
-    displayStock = (messages,currentUser) => {
+    displayStock = (messages) => {
         if(messages.length>0){
             return(
                 <React.Fragment>
@@ -140,30 +110,15 @@ class MessagePanel extends Component{
         }
     } // method to display messages
 
-
-    timeFromNow = timestamp => moment(timestamp).fromNow()
-
-
-    scrollBottom = () => {
-        let Segment = document.getElementById("message-panel-segment")
-        if(Segment !== null ){
-            Segment.scrollTop = Segment.scrollHeight
-        };
-
-    } // method to scroll to bottom
-    
-
     render(){
-        const {messagesRef,messages,messagesLoading} = this.state;
-        const{currentChannel,currentUser} = this.props
+        const {messages,messagesLoading} = this.state;
+        const{currentUser} = this.props
         return(
             <div id="message-panel" className="panels" >
                 <FileModal modal = {this.state.modal} closeModal={this.closeModal}/>
-                <MessagesHeader 
-                />
+                <MessagesHeader/>
 
                 <Segment 
-                    
                     loading={messagesLoading}
                     style={{flex:"1", width:"95%" , margin:"10px auto 0px auto" , overflowY:"scroll"}}
                 >
