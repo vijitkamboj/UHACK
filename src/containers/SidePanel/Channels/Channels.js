@@ -19,9 +19,7 @@ class Channels extends Component{
         isFormEmpty: true,
         channelsRef: firebase.database().ref("supply"),
         firstLoad: true,
-        activeChannel: ""
     } // defining local state for channel compoenent
-
 
     componentDidMount(){
         this.addListeners();
@@ -35,30 +33,10 @@ class Channels extends Component{
         let loadedChannels = [];
         this.state.channelsRef.on("child_added", snap => {
             snap.val().createdBy.name === this.props.currentUser.displayName && loadedChannels.push(snap.val());
-            loadedChannels.length === 1 && this.props.changeCurrentChannel(loadedChannels[0]);
-            this.setFirstChannel(loadedChannels);
             this.setState({channels:loadedChannels});
         });
 
     }// whenever a child is added it returns dataSnapshot of all children and also executes first time when child_added event hasn't happened.
-
-
-    setFirstChannel = (channels) => {
-        if(this.state.firstLoad === true && channels.length>0 ){
-            this.setState({activeChannel : channels[0],firstLoad:false})
-           
-        }
-    }
-
-    handleChannelClick = (channel) => {
-        this.setState({
-            activeChannel: channel
-        })
-        this.props.changeCurrentChannel(channel)
-
-    }
-
-    
 
     displayChannels = (channels) => {
         return(
@@ -67,9 +45,9 @@ class Channels extends Component{
                     return(    
                         <li 
                             key={channel.id}
-                            style={{marginTop: "10px",color:this.state.activeChannel === channel ?"white" : " rgba(0, 0, 0, 0.7)" }}
+                            style={{marginTop: "10px",color:"rgba(0, 0, 0, 0.7)" }}
                             className="user-panel-channels-item" 
-                            onClick={()=>this.handleChannelClick(channel)}
+                            
                         >
                             <span
                                 name = {channel.orderName}
@@ -213,7 +191,7 @@ d
                             border:"none",
                         }}
                     >
-                        Sell fabric
+                        Add Stock ...
                     </Modal.Header>
 
                     <Modal.Content style={{border:"none",fontWeight:"lighter"}}>
