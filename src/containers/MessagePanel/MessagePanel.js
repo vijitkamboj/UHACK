@@ -22,8 +22,8 @@ class MessagePanel extends Component{
         setTimeout(() => {
             const {currentChannel,currentUser} = this.props;
 
-            if (currentChannel && currentUser) {
-                this.addListeners(currentChannel.id)
+            if (currentUser) {
+                this.addListeners()
             }
         }, 1900)
 
@@ -48,8 +48,8 @@ class MessagePanel extends Component{
 
         if (prevProps.currentChannel !== currentChannel) {
 
-            if (currentChannel && currentUser) {
-                this.addListeners(currentChannel.id)
+            if ( currentUser) {
+                this.addListeners()
             }
 
             this.setState({
@@ -65,8 +65,8 @@ class MessagePanel extends Component{
     } // removing the listeners befire component unmounts
 
 
-    addListeners = (channelId) => {
-        this.addMessageListener(channelId)
+    addListeners = () => {
+        this.addMessageListener()
     }// method to add listeners
 
 
