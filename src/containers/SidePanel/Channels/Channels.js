@@ -1,5 +1,6 @@
 import "./Channels.css"
 import React, { Component } from 'react';
+import {StockModal} from "../../MessagePanel/FileModal"
 import {Icon, Modal,Input , Button, Popup} from "semantic-ui-react";
 import firebase from "../../../firebase";
 import {connect} from "react-redux";
@@ -9,7 +10,8 @@ class Channels extends Component{
 
     state = {
         channels: [],
-        modal: false,
+        newModal: false,
+        stockModal: false,
 
         channelName: "",
         channelDetail: "",
@@ -63,9 +65,11 @@ class Channels extends Component{
                                             fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
                                             fontWeight:"lighter",
                                             fontSize: "16px",
-                                            color:"white"}}>
+                                            color:"white"}}
+                                    >
                                             
                                         {channel.orderName}
+                                        
                                     </span>
                                 }
                                 />
@@ -80,7 +84,7 @@ class Channels extends Component{
                                         className="icon" 
                                         id="add"
                                         style={{margin:"auto 20px auto 20px",color:"rgba(245,225,218,0.8)"}}
-                                        onClick={this.showModal}
+                                        onClick={this.showaddStock}
                                     />} 
                                 position="right center"
 
@@ -102,6 +106,9 @@ class Channels extends Component{
         if (!this.state.isFormEmpty){   
             this.addChannel(this.state)
         }
+        if (this.state.stockModal){
+            this.addStock(this.state)
+        }
     } // method to handle submit event
 d
     addChannel = ({channelDetail,channelName,channelsRef,dateOfPickup,timeOfPickup , stock,rate}) => {
@@ -121,7 +128,7 @@ d
                 avatar: photoURL
             }
         }
-        this.closeModal();
+        this.closenewModal();
 
         channelsRef
             .child(key)
@@ -136,6 +143,10 @@ d
             })
             .catch(err => alert(err))
     } // method used to store channel into the database
+
+    addStock = (state)=>{
+        console.log(state);
+    }
 
     handleChange = (event) => {
         
@@ -161,12 +172,20 @@ d
 
     } // method to handle changes in the input field and constantly updating isFormEmpty state
 
+    showaddStock = () => {
+        this.setState({stockModal : true})
+    }
+
+    closestockModal = () => {
+        this.setState({stockModal:false})
+    }
+
     shownewModal = () => {
-        this.setState({modal:true,isFormEmpty:true,channelName: "",channelDetail: "",})
+        this.setState({newModal:true,isFormEmpty:true,channelName: "",channelDetail: "",})
     } // method to show modal
  
-    closeModal = () => {
-        this.setState({modal:false })
+    closenewModal = () => {
+        this.setState({newModal:false })
     } // methos to close the modal
 
     handleEnter = (event) => {
@@ -176,8 +195,8 @@ d
     } // method to check if enter is pressed
 
     render(){
-        const {channels ,modal , isFormEmpty} = this.state;
-        const{shownewModal , closeModal} =this;
+        const {channels ,newModal , isFormEmpty ,stockModal} = this.state;
+        const{shownewModal , closenewModal} =this;
         
         return(
             <React.Fragment>
@@ -206,9 +225,11 @@ d
                 }}>
                    {this.displayChannels(channels)}
                 </ul>
+
+                <StockModal modal = {stockModal} closeModal = {this.closestockModal} onSubmit={this.handleSubmit} />
                 
                 {/* dispalying modal */}
-                <Modal basic open={modal} closeIcon onClose={closeModal} onKeyDown={this.handleEnter}>
+                <Modal basic open={newModal} closeIcon onClose={closenewModal} onKeyDown={this.handleEnter}>
 
                     <Modal.Header 
                         icon="add" 
@@ -302,7 +323,7 @@ d
                             color="red" 
                             basic 
                             inverted 
-                            onClick={this.closeModal}
+                            onClick={this.closenewModal}
                         >
                             <Icon name="remove" />
                             Cancel

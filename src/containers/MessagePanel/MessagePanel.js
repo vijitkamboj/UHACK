@@ -2,11 +2,11 @@ import "./MessagePanel.css"
 import React, { Component } from 'react';
 
 import MessagesHeader from "./MessagesHeader";
-import FileModal from "./FileModal";
+import {FileModal} from "./FileModal";
 
 import {Segment,Comment,Card,Icon,Image,Button} from "semantic-ui-react";
 import firebase from "../../firebase";
-import moment from "moment"
+
 
 class MessagePanel extends Component{
 
