@@ -23,6 +23,10 @@ class Channels extends Component{
         isFormEmpty: true,
         channelsRef: firebase.database().ref("supply"),
 
+        currentProduct:"",
+        productRef: "",
+        productStockRef: "",
+
     } // defining local state for channel compoenent
 
     componentDidMount(){
@@ -55,7 +59,7 @@ class Channels extends Component{
                             <span>
                                 <Popup
                                 header = {`${channel.rate} Rs/kg  |  Stock = ${channel.stock}`}
-                                content='I will not flip!'
+                                content={channel.orderDetail}
                                 on='click'
                                 pinned
                                 trigger={
@@ -84,7 +88,7 @@ class Channels extends Component{
                                         className="icon" 
                                         id="add"
                                         style={{margin:"auto 20px auto 20px",color:"rgba(245,225,218,0.8)"}}
-                                        onClick={this.showaddStock}
+                                        onClick={()=>{this.handleAddStockClick(channel)}}
                                     />} 
                                 position="right center"
 
@@ -110,7 +114,7 @@ class Channels extends Component{
             this.addStock(this.state)
         }
     } // method to handle submit event
-d
+
     addChannel = ({channelDetail,channelName,channelsRef,dateOfPickup,timeOfPickup , stock,rate}) => {
 
         const { displayName , photoURL} = this.props.currentUser
@@ -144,9 +148,6 @@ d
             .catch(err => alert(err))
     } // method used to store channel into the database
 
-    // addStock = (state)=>{
-        
-    // }
 
     handleChange = (event) => {
         
@@ -172,19 +173,34 @@ d
 
     } // method to handle changes in the input field and constantly updating isFormEmpty state
 
-    showaddStock = () => {
-        this.setState({stockModal : true})
+    handleAddStockClick = (message) => {
+        this.setState({
+            stockModal:true,
+            currentProduct: message,
+            productStockRef : firebase.database().ref("supply/" + message.id+"/stock"),
+        })
     }
 
-    closestockModal = () => {
-        this.setState({stockModal:false})
+    placeOrder = (amount) => {
+        this.state.productStockRef.set(Number(this.state.currentProduct.stock) + Number(amount))
+
     }
+
+    closeStockModal = () => {
+        this.setState({
+            stockModal:false,
+            currentProduct: "",
+            productRef : "",
+            productStockRef:""
+        })
+    }
+
 
     shownewModal = () => {
         this.setState({newModal:true,isFormEmpty:true,channelName: "",channelDetail: "",})
     } // method to show modal
  
-    closenewModal = (amount) => {
+    closenewModal = () => {
         this.setState({newModal:false })
     } // methos to close the modal
 
@@ -195,8 +211,8 @@ d
     } // method to check if enter is pressed
 
     render(){
-        const {channels ,newModal , isFormEmpty ,stockModal} = this.state;
-        const{shownewModal , closenewModal} =this;
+        const {channels ,newModal , isFormEmpty ,stockModal , currentProduct} = this.state;
+        const{shownewModal , closenewModal, placeOrder} =this;
         
         return(
             <React.Fragment>
@@ -226,7 +242,7 @@ d
                    {this.displayChannels(channels)}
                 </ul>
 
-                <StockModal modal = {stockModal} closeModal = {this.closestockModal} onSubmit={this.handleSubmit} />
+                <StockModal modal = {stockModal} closeModal = {this.closeStockModal} placeOrder={placeOrder} currentProduct={currentProduct} />
                 
                 {/* dispalying modal */}
                 <Modal basic open={newModal} closeIcon onClose={closenewModal} onKeyDown={this.handleEnter}>

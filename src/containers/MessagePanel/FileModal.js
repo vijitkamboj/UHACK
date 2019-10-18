@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {Modal,Button,Icon,Input,Confirm} from "semantic-ui-react"
+import {Modal,Button,Icon,Input,Confirm,Message} from "semantic-ui-react"
 
 
 class FileModal extends Component {
@@ -7,13 +7,14 @@ class FileModal extends Component {
         amount: "",
         isFormEmpty: true,
         open:false,
+        error:false
     }
     
 
 
     palceOrder = () => {
-        this.props.placeOrder(this.state.amount)
-        this.show()
+            this.props.placeOrder(this.state.amount)
+            this.show()
     }
 
     isFormEmpty = (event) => {
@@ -63,7 +64,7 @@ class FileModal extends Component {
                         }}
 
                         actionPosition='left'
-                        placeholder='Amount  in Kg...'
+                        placeholder='In sq-mt...'
                         onChange = {this.isFormEmpty}
                     />
 
@@ -107,18 +108,16 @@ class FileModal extends Component {
 
 class StockModal extends Component {
     state = {
-        amount: null,
+        amount: "",
         isFormEmpty: true,
-        open:false
+        open:false,
     }
+    
 
 
     palceOrder = () => {
-        this.props.closeModal()
+        this.props.placeOrder(this.state.amount)
         this.show()
-        this.setState({
-            stock: ""
-        })
     }
 
     isFormEmpty = (event) => {
@@ -129,12 +128,15 @@ class StockModal extends Component {
         
         }else{
             this.setState({
-                isFormEmpty:false
+                isFormEmpty:false,
+                amount:Number(event.target.value),
+                currentProductName: this.props.currentProduct.orderName,
+                currentProductStock: this.props.currentProduct.stock
             })
         }
     }
 
-    show = () => this.setState({ open: true })
+    show = () => this.setState({ open: true },()=>{this.props.closeModal()})
     handleConfirm = () => this.setState({ open: false })
     handleCancel = () => this.setState({ open: false })
 
@@ -151,7 +153,7 @@ class StockModal extends Component {
                         border:"none",
                     }}
                 >
-                    Add Stock
+                    Stock Update
                 </Modal.Header>
 
                 <Modal.Content style={{border:"none",fontWeight:"lighter"}}>
@@ -162,11 +164,11 @@ class StockModal extends Component {
                         color: 'teal',
                         labelPosition: 'left',
                         icon: 'cart',
-                        content: 'Stock',
+                        content: 'Amount',
                         }}
 
                         actionPosition='left'
-                        placeholder='In sq-mt'
+                        placeholder='In sq-mt...'
                         onChange = {this.isFormEmpty}
                     />
 
@@ -182,7 +184,7 @@ class StockModal extends Component {
                         disabled={this.state.isFormEmpty}
                     >
                         <Icon name="shopping basket"/>
-                        Add
+                        Add Stock
                     </Button>
 
                     <Button 
@@ -199,7 +201,7 @@ class StockModal extends Component {
                 </Modal>
                 <Confirm
                     open={this.state.open}
-                    content='Your stock has been updated'
+                    content={`Your Stock has been updated and your current stock for ${this.state.currentProductName} is ${ Number(this.state.amount) + Number(this.state.currentProductStock)}`}
                     onCancel={this.handleCancel}
                     onConfirm={this.handleConfirm}
                 />
