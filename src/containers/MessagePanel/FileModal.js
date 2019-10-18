@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {Modal,Button,Icon,Input,Confirm,Message} from "semantic-ui-react"
+import {Modal,Button,Icon,Input,Confirm} from "semantic-ui-react"
 
 
 class FileModal extends Component {
@@ -18,7 +18,7 @@ class FileModal extends Component {
     }
 
     isFormEmpty = (event) => {
-        if (event.target.value === "") {
+        if (event.target.value === "" & this.state.amount <= this.props.currentProductStock) {
             this.setState({
                 isFormEmpty : true
             })

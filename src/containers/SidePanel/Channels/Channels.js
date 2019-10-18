@@ -1,7 +1,7 @@
 import "./Channels.css"
 import React, { Component } from 'react';
 import {StockModal} from "../../MessagePanel/FileModal"
-import {Icon, Modal,Input , Button, Popup} from "semantic-ui-react";
+import {Icon, Modal,Input , Button, Popup,Dropdown} from "semantic-ui-react";
 import firebase from "../../../firebase";
 import {connect} from "react-redux";
 import { changeCurrentChannel } from "../../../actions/channels";
@@ -213,10 +213,26 @@ class Channels extends Component{
     render(){
         const {channels ,newModal , isFormEmpty ,stockModal , currentProduct} = this.state;
         const{shownewModal , closenewModal, placeOrder} =this;
+        const materialOptions = [
+            { key: 'ct', value: 'Cotton', text: 'Cotton' },
+            { key: 'si', value: 'Cotton', text: 'Silk' },
+            { key: 'de', value: 'Cotton', text: 'Denim' },
+            { key: 'le', value: 'Cotton', text: 'Leather' },
+            { key: 'cts', value: 'Cotton', text: 'Cotton Satin' },
+            { key: 'ch', value: 'Cotton', text: 'Chiffon' },
+            { key: 'cr', value: 'Cotton', text: 'Crepe' },
+            { key: 'mu', value: 'Cotton', text: 'Muslin' },
+            { key: 'ju', value: 'Cotton', text: 'Jute' },
+            { key: 'ny', value: 'Cotton', text: 'Nylon' },
+            { key: 'fl', value: 'Cotton', text: 'Flannel' },
+            { key: 'li', value: 'Cotton', text: 'Linen' },
+            { key: 'ly', value: 'Cotton', text: 'Lycra' },
+            { key: 'ra', value: 'Cotton', text: 'Rayon' }
+          ]
         
         return(
             <React.Fragment>
-                {/* displaying channel heading */}
+                {/* displaying channel heading */}~
                 <div id="user-panel-channels-header" >
                 <Icon name="circle" size="small" style={{margin:"auto 10px auto 0",color:"rgba(255,153,153)"}} />
 
@@ -260,11 +276,13 @@ class Channels extends Component{
 
                     <Modal.Content style={{border:"none",fontWeight:"lighter"}}>
 
-                        <Input 
-                            fluid 
-                            label="Type of Material"
+                        <Dropdown
+                            placeholder='Type of Material'
+                            fluid
+                            search
+                            selection
+                            options={materialOptions}
                             name="channelName"
-                            onChange={this.handleChange}
                             style={{marginBottom:"10px"}}
                         />
 

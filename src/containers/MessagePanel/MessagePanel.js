@@ -140,7 +140,7 @@ class MessagePanel extends Component{
         const{currentUser} = this.props
         return(
             <div id="message-panel" className="panels" >
-                <FileModal modal = {this.state.modal} closeModal={this.closeModal} placeOrder={this.placeOrder} currentProductRate={currentProduct.rate}/>
+                <FileModal modal = {this.state.modal} closeModal={this.closeModal} placeOrder={this.placeOrder} currentProductRate={currentProduct.rate} currentProductStock={currentProduct.stock}/>
                 <MessagesHeader/>
 
                 <Segment 
