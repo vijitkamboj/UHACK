@@ -77,7 +77,7 @@ class MessagePanel extends Component{
         this.state.productStockRef.set(Number(this.state.currentProduct.stock) - Number(amount))
         }
         else{
-            alert("Stock Out")
+            alert("Order exceeds available stock")
         }
     }
 
