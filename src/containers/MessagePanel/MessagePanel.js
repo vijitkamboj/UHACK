@@ -49,6 +49,11 @@ class MessagePanel extends Component{
             })
             
         })
+        if (loadedMessages.length === 0){
+            this.setState({
+                messagesLoading: false
+            })
+        }
     }// Message Listener
 
 
@@ -78,7 +83,7 @@ class MessagePanel extends Component{
                                             <Card.Header>{message.orderName}</Card.Header>
 
                                             <Card.Meta>
-                                                <span className='date'>{message.rate}</span>Rs/Kg
+                                                <span className='date'>{message.rate}</span>Rs/m<sup>2</sup> | {message.createdBy.name}
                                             </Card.Meta>
 
                                             <Card.Description>
@@ -90,7 +95,7 @@ class MessagePanel extends Component{
                                             <Card.Content extra>
                                             <span>
                                                 <Icon name='shopping bag' />
-                                                {message.weightOfOrder} Kg available
+                                                {message.stock} m2 available
                                             </span>
                                             <Button style={{marginLeft:"60px"}} animated='vertical' onClick={this.handleShop} >
                                                 <Button.Content hidden>Shop</Button.Content>

@@ -171,7 +171,7 @@ class register extends Component {
 
 					<div className="field">
 						<div className="name">
-							Username
+							Name of the Buisness
 						</div>
 
 						<input 

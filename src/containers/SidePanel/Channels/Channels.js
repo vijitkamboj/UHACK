@@ -1,6 +1,6 @@
 import "./Channels.css"
 import React, { Component } from 'react';
-import {Icon, Modal,Input , Button} from "semantic-ui-react";
+import {Icon, Modal,Input , Button, Popup} from "semantic-ui-react";
 import firebase from "../../../firebase";
 import {connect} from "react-redux";
 import { changeCurrentChannel } from "../../../actions/channels";
@@ -10,15 +10,17 @@ class Channels extends Component{
     state = {
         channels: [],
         modal: false,
+
         channelName: "",
         channelDetail: "",
         dateOfPickup : "",
         timeOfPickup : "",
-        weightOfOrder : "",
+        stock : "",
         rate : "",
+
         isFormEmpty: true,
         channelsRef: firebase.database().ref("supply"),
-        firstLoad: true,
+
     } // defining local state for channel compoenent
 
     componentDidMount(){
@@ -47,20 +49,45 @@ class Channels extends Component{
                             key={channel.id}
                             style={{marginTop: "10px",color:"rgba(0, 0, 0, 0.7)" }}
                             className="user-panel-channels-item" 
-                            
                         >
-                            <span
-                                name = {channel.orderName}
-                                style={{
-                                    fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
-                                    fontWeight:"lighter",
-                                    fontSize: "16px",
-                                    color:"white"
-
-                                }}
-                            >
-                                {channel.orderName}
+                            <span>
+                                <Popup
+                                header = {`${channel.rate} Rs/kg  |  Stock = ${channel.stock}`}
+                                content='I will not flip!'
+                                on='click'
+                                pinned
+                                trigger={
+                                    <span
+                                        name = {channel.orderName}
+                                        style={{
+                                            fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
+                                            fontWeight:"lighter",
+                                            fontSize: "16px",
+                                            color:"white"}}>
+                                            
+                                        {channel.orderName}
+                                    </span>
+                                }
+                                />
                             </span>
+
+                            <Popup 
+                                content='Add stock' 
+                                trigger={
+                                    <Icon 
+                                        name="add to cart" 
+                                        size="small"
+                                        className="icon" 
+                                        id="add"
+                                        style={{margin:"auto 20px auto 20px",color:"rgba(245,225,218,0.8)"}}
+                                        onClick={this.showModal}
+                                    />} 
+                                position="right center"
+
+                            />
+
+                            
+                            
                         </li>
                     )
                 })
@@ -77,7 +104,7 @@ class Channels extends Component{
         }
     } // method to handle submit event
 d
-    addChannel = ({channelDetail,channelName,channelsRef,dateOfPickup,timeOfPickup , weightOfOrder,rate}) => {
+    addChannel = ({channelDetail,channelName,channelsRef,dateOfPickup,timeOfPickup , stock,rate}) => {
 
         const { displayName , photoURL} = this.props.currentUser
         const key = channelsRef.push().key
@@ -87,7 +114,7 @@ d
             orderDetail: channelDetail,
             dateOfPickup : dateOfPickup,
             timeOfPickup : timeOfPickup,
-            weightOfOrder : weightOfOrder,
+            stock : stock,
             rate : rate,
             createdBy: {
                 name: displayName,
@@ -116,7 +143,7 @@ d
             [event.target.name]: event.target.value,
         })
 
-        if (this.state.channelDetail === "" || this.state.channelName === "" || this.state.dateOfPickup === "" || this.state.timeOfPickup === "" || this.state.weightOfOrder === "" || this.state.rate === ""){
+        if (this.state.channelDetail === "" || this.state.channelName === "" || this.state.dateOfPickup === "" || this.state.timeOfPickup === "" || this.state.stock === "" || this.state.rate === ""){
             this.setState({
                 isFormEmpty : true
             })
@@ -134,7 +161,7 @@ d
 
     } // method to handle changes in the input field and constantly updating isFormEmpty state
 
-    showModal = () => {
+    shownewModal = () => {
         this.setState({modal:true,isFormEmpty:true,channelName: "",channelDetail: "",})
     } // method to show modal
  
@@ -150,7 +177,7 @@ d
 
     render(){
         const {channels ,modal , isFormEmpty} = this.state;
-        const{showModal , closeModal} =this;
+        const{shownewModal , closeModal} =this;
         
         return(
             <React.Fragment>
@@ -166,7 +193,7 @@ d
                     className="icon" 
                     id="add"
                     style={{margin:"auto 20px auto auto",color:"rgba(0, 0, 0, 0.7)"}}
-                    onClick={showModal}
+                    onClick={shownewModal}
                     />
 
                 </div> 
@@ -191,7 +218,7 @@ d
                             border:"none",
                         }}
                     >
-                        Add Stock ...
+                        Add new item ...
                     </Modal.Header>
 
                     <Modal.Content style={{border:"none",fontWeight:"lighter"}}>
@@ -232,8 +259,9 @@ d
 
                         <Input 
                             fluid 
-                            name="weightOfOrder"
-                            label = "Order Weight"
+                            name="stock"
+                            label = {`Stock`}
+                            placeholder = "Square Meter"
                             onChange={this.handleChange}
                             style={{marginBottom:"10px"}}
                         />
@@ -241,7 +269,8 @@ d
                             fluid 
                             type = "text"
                             name="rate"
-                            label = "Rate"
+                            placeholder = "Rs / sq-mt"
+                            label = "Proposed rate"
                             onChange={this.handleChange}
                             style={{marginBottom:"10px"}}
                         />
