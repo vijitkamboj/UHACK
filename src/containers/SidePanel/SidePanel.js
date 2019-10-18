@@ -6,7 +6,6 @@ import Channels from "./Channels/Channels"
 class SidePanel extends Component{
 
     render(){
-        console.log(this.props.currentUser);
         return(
             <div id="side-panel" className="panels">
                 <UserPanel currentUser = {this.props.currentUser}/>

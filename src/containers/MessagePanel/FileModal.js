@@ -4,15 +4,15 @@ import {Modal,Button,Icon,Input,Confirm} from "semantic-ui-react"
 
 class FileModal extends Component {
     state = {
-        amount: null,
+        amount: "",
         isFormEmpty: true,
-        open:false
+        open:false,
     }
+    
 
 
     palceOrder = () => {
         this.props.placeOrder(this.state.amount)
-        this.props.closeModal()
         this.show()
     }
 
@@ -25,12 +25,13 @@ class FileModal extends Component {
         }else{
             this.setState({
                 isFormEmpty:false,
-                amount:event.target.value
+                amount:Number(event.target.value),
+                currentProductRate: Number(this.props.currentProductRate)
             })
         }
     }
 
-    show = () => this.setState({ open: true })
+    show = () => this.setState({ open: true },()=>{this.props.closeModal()})
     handleConfirm = () => this.setState({ open: false })
     handleCancel = () => this.setState({ open: false })
 
@@ -95,7 +96,7 @@ class FileModal extends Component {
                 </Modal>
                 <Confirm
                     open={this.state.open}
-                    content={`Your Order has been placed and Total bill is ${this.state.amount * this.props.currentProductRate} Rs`}
+                    content={`Your Order has been placed and Total bill is ${this.state.amount * this.state.currentProductRate} Rs`}
                     onCancel={this.handleCancel}
                     onConfirm={this.handleConfirm}
                 />

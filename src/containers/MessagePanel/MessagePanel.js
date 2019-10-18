@@ -14,6 +14,7 @@ class MessagePanel extends Component{
         currentProduct:"",
         messagesRef: firebase.database().ref("supply"),
         productRef: "",
+        productStockRef: "",
         messages: [],
         messagesLoading:true,
         modal : false
@@ -67,16 +68,26 @@ class MessagePanel extends Component{
         this.setState({
             modal:true,
             currentProduct: message,
-            productRef : firebase.database().ref("supply/" + message.id)
+            productStockRef : firebase.database().ref("supply/" + message.id+"/stock"),
         })
     }
 
     placeOrder = (amount) => {
-        console.log(amount);
+        if(Number(this.state.currentProduct.stock) - Number(amount)>0){
+        this.state.productStockRef.set(Number(this.state.currentProduct.stock) - Number(amount))
+        }
+        else{
+            alert("Stock Out")
+        }
     }
 
     closeModal = () => {
-        this.setState({modal:false})
+        this.setState({
+            modal:false,
+            currentProduct: "",
+            productRef : "",
+            productStockRef:""
+        })
     }
 
     displayStock = (messages) => {

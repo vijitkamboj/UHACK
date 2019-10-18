@@ -144,9 +144,9 @@ d
             .catch(err => alert(err))
     } // method used to store channel into the database
 
-    addStock = (state)=>{
+    // addStock = (state)=>{
         
-    }
+    // }
 
     handleChange = (event) => {
         
@@ -185,7 +185,6 @@ d
     } // method to show modal
  
     closenewModal = (amount) => {
-        this.placeOrder(amount)
         this.setState({newModal:false })
     } // methos to close the modal
 
@@ -256,7 +255,7 @@ d
                         <Input 
                             fluid 
                             name="channelDetail"
-                            label = "Material Detail"
+                            label = "Material Source"
                             onChange={this.handleChange}
                             style={{marginBottom:"10px"}}
                         />
