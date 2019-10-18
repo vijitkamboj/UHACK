@@ -145,7 +145,7 @@ d
     } // method used to store channel into the database
 
     addStock = (state)=>{
-        console.log(state);
+        
     }
 
     handleChange = (event) => {
@@ -184,7 +184,8 @@ d
         this.setState({newModal:true,isFormEmpty:true,channelName: "",channelDetail: "",})
     } // method to show modal
  
-    closenewModal = () => {
+    closenewModal = (amount) => {
+        this.placeOrder(amount)
         this.setState({newModal:false })
     } // methos to close the modal
 

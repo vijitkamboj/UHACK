@@ -11,7 +11,9 @@ import firebase from "../../firebase";
 class MessagePanel extends Component{
 
     state = {
+        currentProduct:"",
         messagesRef: firebase.database().ref("supply"),
+        productRef: "",
         messages: [],
         messagesLoading:true,
         modal : false
@@ -61,8 +63,16 @@ class MessagePanel extends Component{
         return message.hasOwnProperty('image') && ! message.hasOwnProperty('content')
     } // method to check wheather message is a image or not
 
-    handleShop = () => {
-        this.setState({modal : true})
+    handleBuyClick = (message) => {
+        this.setState({
+            modal:true,
+            currentProduct: message,
+            productRef : firebase.database().ref("supply/" + message.id)
+        })
+    }
+
+    placeOrder = (amount) => {
+        console.log(amount);
     }
 
     closeModal = () => {
@@ -97,7 +107,7 @@ class MessagePanel extends Component{
                                                 <Icon name='shopping bag' />
                                                 {message.stock} m2 available
                                             </span>
-                                            <Button style={{marginLeft:"60px"}} animated='vertical' onClick={this.handleShop} >
+                                            <Button style={{marginLeft:"60px"}} animated='vertical' onClick={()=>this.handleBuyClick(message)} >
                                                 <Button.Content hidden>Shop</Button.Content>
                                                 <Button.Content visible>
                                                     <Icon name='shop' />
@@ -115,11 +125,11 @@ class MessagePanel extends Component{
     } // method to display messages
 
     render(){
-        const {messages,messagesLoading} = this.state;
+        const {messages,messagesLoading,currentProduct} = this.state;
         const{currentUser} = this.props
         return(
             <div id="message-panel" className="panels" >
-                <FileModal modal = {this.state.modal} closeModal={this.closeModal}/>
+                <FileModal modal = {this.state.modal} closeModal={this.closeModal} placeOrder={this.placeOrder} currentProductRate={currentProduct.rate}/>
                 <MessagesHeader/>
 
                 <Segment 

@@ -11,11 +11,9 @@ class FileModal extends Component {
 
 
     palceOrder = () => {
+        this.props.placeOrder(this.state.amount)
         this.props.closeModal()
         this.show()
-        this.setState({
-            amount: ""
-        })
     }
 
     isFormEmpty = (event) => {
@@ -26,7 +24,8 @@ class FileModal extends Component {
         
         }else{
             this.setState({
-                isFormEmpty:false
+                isFormEmpty:false,
+                amount:event.target.value
             })
         }
     }
@@ -96,7 +95,7 @@ class FileModal extends Component {
                 </Modal>
                 <Confirm
                     open={this.state.open}
-                    content='Your order is placed'
+                    content={`Your Order has been placed and Total bill is ${this.state.amount * this.props.currentProductRate} Rs`}
                     onCancel={this.handleCancel}
                     onConfirm={this.handleConfirm}
                 />
