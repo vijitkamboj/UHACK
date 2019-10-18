@@ -18,7 +18,7 @@ class FileModal extends Component {
     }
 
     isFormEmpty = (event) => {
-        if (event.target.value === "" & this.state.amount <= this.props.currentProductStock) {
+        if (event.target.value === "") {
             this.setState({
                 isFormEmpty : true
             })

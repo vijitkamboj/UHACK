@@ -213,22 +213,6 @@ class Channels extends Component{
     render(){
         const {channels ,newModal , isFormEmpty ,stockModal , currentProduct} = this.state;
         const{shownewModal , closenewModal, placeOrder} =this;
-        const materialOptions = [
-            { key: 'ct', value: 'Cotton', text: 'Cotton' },
-            { key: 'si', value: 'Cotton', text: 'Silk' },
-            { key: 'de', value: 'Cotton', text: 'Denim' },
-            { key: 'le', value: 'Cotton', text: 'Leather' },
-            { key: 'cts', value: 'Cotton', text: 'Cotton Satin' },
-            { key: 'ch', value: 'Cotton', text: 'Chiffon' },
-            { key: 'cr', value: 'Cotton', text: 'Crepe' },
-            { key: 'mu', value: 'Cotton', text: 'Muslin' },
-            { key: 'ju', value: 'Cotton', text: 'Jute' },
-            { key: 'ny', value: 'Cotton', text: 'Nylon' },
-            { key: 'fl', value: 'Cotton', text: 'Flannel' },
-            { key: 'li', value: 'Cotton', text: 'Linen' },
-            { key: 'ly', value: 'Cotton', text: 'Lycra' },
-            { key: 'ra', value: 'Cotton', text: 'Rayon' }
-          ]
         
         return(
             <React.Fragment>
@@ -245,6 +229,7 @@ class Channels extends Component{
                     id="add"
                     style={{margin:"auto 20px auto auto",color:"rgba(0, 0, 0, 0.7)"}}
                     onClick={shownewModal}
+                    
                     />
 
                 </div> 
@@ -276,13 +261,11 @@ class Channels extends Component{
 
                     <Modal.Content style={{border:"none",fontWeight:"lighter"}}>
 
-                        <Dropdown
-                            placeholder='Type of Material'
-                            fluid
-                            search
-                            selection
-                            options={materialOptions}
+                        <Input 
+                            fluid 
                             name="channelName"
+                            label = "Material Type"
+                            onChange={this.handleChange}
                             style={{marginBottom:"10px"}}
                         />
 
