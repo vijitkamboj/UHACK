@@ -1,7 +1,7 @@
 import "./Channels.css"
 import React, { Component } from 'react';
 import {StockModal} from "../../MessagePanel/FileModal"
-import {Icon, Modal,Input , Button, Popup,Dropdown} from "semantic-ui-react";
+import {Icon, Modal,Input , Button, Popup} from "semantic-ui-react";
 import firebase from "../../../firebase";
 import {connect} from "react-redux";
 import { changeCurrentChannel } from "../../../actions/channels";

@@ -4,14 +4,15 @@ import 'firebase/auth';
 import 'firebase/database';
 import 'firebase/firestore'
 
-const firebaseConfig = {
-    apiKey: "AIzaSyDeLyV13JcASYxbD949-9LrkXcy-jzdk14",
-    authDomain: "taleapp.firebaseapp.com",
-    databaseURL: "https://taleapp.firebaseio.com",
-    projectId: "taleapp",
-    storageBucket: "taleapp.appspot.com",
-    messagingSenderId: "216057693839",
-    appId: "1:216057693839:web:26fe94434e76da52"
+var firebaseConfig = {
+    apiKey: "AIzaSyDyJ8b6-qxqz2leigLC34-rMK5zAjFgXxg",
+    authDomain: "kapda-55e97.firebaseapp.com",
+    databaseURL: "https://kapda-55e97.firebaseio.com",
+    projectId: "kapda-55e97",
+    storageBucket: "kapda-55e97.appspot.com",
+    messagingSenderId: "841617051608",
+    appId: "1:841617051608:web:c5111d65430986a64decad",
+    measurementId: "G-GBBF72QJKF"
   };
 firebase.initializeApp(firebaseConfig);
 

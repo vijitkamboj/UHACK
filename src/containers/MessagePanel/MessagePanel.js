@@ -11,18 +11,20 @@ import firebase from "../../firebase";
 class MessagePanel extends Component{
 
     state = {
-        currentProduct:"",
+        currentProduct: "",
         messagesRef: firebase.database().ref("supply"),
         productRef: "",
         productStockRef: "",
         messages: [],
-        messagesLoading:true,
-        modal : false
+        messagesLoading: true,
+        modal: false
     } // initial state - message segment will be loading 
 
     componentDidMount() {
         setTimeout(() => {
-            const {currentUser} = this.props;
+            const {
+                currentUser
+            } = this.props;
 
             if (currentUser) {
                 this.addListeners()
@@ -30,9 +32,9 @@ class MessagePanel extends Component{
         }, 1000)
 
     } // when component has mounted , adding listeners on channel but after a
-     //delay of 1s so as to wait for (channel component to succefully mount so that firstChannel can be stored on global state)  
+    //delay of 1s so as to wait for (channel component to succefully mount so that firstChannel can be stored on global state)  
 
-    componentWillUnmount(){
+    componentWillUnmount() {
         this.state.messagesRef.off("child_added")
     } // removing the listeners befire component unmounts
 
@@ -80,13 +82,12 @@ class MessagePanel extends Component{
             alert("Order exceeds available stock")
         }
     }
-
     closeModal = () => {
         this.setState({
-            modal:false,
+            modal: false,
             currentProduct: "",
-            productRef : "",
-            productStockRef:""
+            productRef: "",
+            productStockRef: ""
         })
     }
 
